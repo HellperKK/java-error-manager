@@ -28,7 +28,7 @@ which may be as heavier as capturing exception descripbed above.
 
 ## Solution ?
 My proposal to this problem is made by two classes that are
-united uder an abstract class. One is for describing success
+united under an abstract class. One is for describing success
 and holds the result of the process, the other for errors and 
 holds a `String` constaining the error message.
 
