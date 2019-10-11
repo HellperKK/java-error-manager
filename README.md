@@ -60,3 +60,5 @@ public class Main {
     }
 }
 ```
+
+As you can see, this has some problems, like the fact that I hav to cast elem to Integer each time
