@@ -17,14 +17,14 @@ Those ways are okay, but I think there both have some problems.
 
 For the exception case, if the exception is not caught, it can
 abruptly stop the program. There are of course checked exception
-that help, but cactching can make the process way much heavyer,
+that help, but catching can make the process way much heavier,
 like when dealing with division.
 
 For the nil case, it first not always usable in java since
 primitives are not nullable (but I would say the problem is
-on java's side). Plus, is you have many acctions that can fail
+on java's side). Plus, is you have many actions that can fail
 you will have to check each time if you don't encounter nil,
-which may be as heavier as capturing exception descripbed above.
+which may be as heavier as capturing exception described above.
 
 ## Solution ?
 My proposal to this problem is made by two classes that are
