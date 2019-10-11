@@ -32,32 +32,21 @@ united under an abstract class. One is for describing success
 and holds the result of the process, the other for errors and
 holds a `String` containing the error message.
 
-If you are familair with Scala, I think you could see this
+If you are familiar with Scala, I think you could see this
 as a variant of Either[A, String]. From an elm background this
 looks a lot like the type Result.
 
 Example case :
 ```java
-public class Main {
-    public static void main(String[] args) {
-        Result.begin(42)                            // starts with 42
-            .run(elem -> divide(elem, 2))           // divides by 2
-            .show()                                 // show the result
-            .run(elem -> divide((Integer)elem, 0))  // tries to divide by 0 and fails
-            .run(elem -> divide((Integer)elem, 3))  // since error is not captured, does nothing
-            .capture(message -> 42)                 // captures the error and rolls back to 42
-            .run(elem -> divide((Integer)elem, 3))  // divides by 3
-            .show();                                // finally show the result
-    }
-
-    public static Result<Integer> divide(Integer f, Integer s) {
-        if (s != 0) {
-            return new Success(f / s);
-        }
-        else {
-            return new Error("Dividing by Zero");
-        }
-    }
+public static void main(String[] args) {
+    Result.begin(42)            // starts with 42
+        .run(elem -> elem / 2)  // divides by 2
+        .show()                 // show the result
+        .run(elem -> elem / 0)  // tries to divide by 0 and fails
+        .run(elem -> elem / 3)  // since error is not captured, does nothing
+        .capture(message -> 42) // captures the error and rolls back to 42
+        .run(elem -> elem / 3)  // divides by 3
+        .show();                // finally show the result
 }
 ```
 

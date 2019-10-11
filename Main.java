@@ -1,22 +1,13 @@
 public class Main {
     public static void main(String[] args) {
-        Result.begin(42)                            // starts with 42
-            .run(elem -> divide(elem, 2))           // divides by 2
-            .show()                                 // show the result
-            .run(elem -> divide((Integer)elem, 0))  // tries to divide by 0 and fails
-            .run(elem -> divide((Integer)elem, 3))  // since error is not captured, does nothing
-            .capture(message -> 42)                 // captures the error and rolls back to 42
-            .run(elem -> divide((Integer)elem, 3))  // divides by 3
-            .show();                                // finally show the result
-    }
-
-    public static Result<Integer> divide(Integer f, Integer s) {
-        if (s != 0) {
-            return new Success(f / s);
-        }
-        else {
-            return new Error("Dividing by Zero");
-        }
+        Result.begin(42)            // starts with 42
+            .run(elem -> elem / 2)  // divides by 2
+            .show()                 // show the result
+            .run(elem -> elem / 0)  // tries to divide by 0 and fails
+            .run(elem -> elem / 3)  // since error is not captured, does nothing
+            .capture(message -> 42) // captures the error and rolls back to 42
+            .run(elem -> elem / 3)  // divides by 3
+            .show();                // finally show the result
     }
 }
 
@@ -29,11 +20,11 @@ abstract class Result<V> {
         return new Success(elem);
     }
 
-    abstract public <N, O> Result<N> run(AtomLambda<V, O> lam);
-    abstract public <N, O> Result<N> capture(AtomLambda<String, O> lam);
+    abstract public <N> Result<N> run(AtomLambda<V, N> lam);
+    abstract public <N> Result<N> capture(AtomLambda<String, N> lam);
     abstract public boolean succeded();
 
-    
+
     public Result<V> show() {
         System.out.println(this);
         return this;
@@ -47,18 +38,16 @@ class Success<V> extends Result<V> {
         this.elem = elem;
     }
 
-    public <N, O> Result<N> run(AtomLambda<V, O> lam) {
-        O result = lam.call(elem);
-        if (result instanceof Result) {
-            Result<N> conv = (Result<N>) result;
-            return conv;
+    public <N> Result<N> run(AtomLambda<V, N> lam) {
+        try {
+          return new Success(lam.call(elem));
         }
-        else {
-            return new Success(result);
+        catch(Exception e) {
+          return new Error(e.getMessage());
         }
     }
 
-    public <N, O> Result<N> capture(AtomLambda<String, O> lam) {
+    public <N> Result<N> capture(AtomLambda<String, N> lam) {
         return new Success(elem);
     }
 
@@ -78,18 +67,16 @@ class Error<V> extends Result<V> {
         this.elem = elem;
     }
 
-    public <N, O> Result<N> run(AtomLambda<V, O> lam) {
-        return new Error(elem);        
+    public <N> Result<N> run(AtomLambda<V, N> lam) {
+        return new Error(elem);
     }
 
-    public <N, O> Result<N> capture(AtomLambda<String, O> lam) {
-        O result = lam.call(elem);
-        if (result instanceof Result) {
-            Result<N> conv = (Result<N>) result;
-            return conv;
+    public <N> Result<N> capture(AtomLambda<String, N> lam) {
+        try {
+          return new Success(lam.call(elem));
         }
-        else {
-            return new Success(result);
+        catch(Exception e) {
+          return new Error(e.getMessage());
         }
     }
 
