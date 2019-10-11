@@ -1,13 +1,13 @@
 # java-error-manager
 Trying an approach for handling errors in java
- 
+
 Beware ! The code is in an early stage an thus still a bit messy.
 
 # Concept
 
 ## Problems
-In java when you do a task that may fail, like division or looking 
-for a value in a collection at a given index, there are two ways of 
+In java when you do a task that may fail, like division or looking
+for a value in a collection at a given index, there are two ways of
 dealing with the potential fail :
 
 - throwing an exception
@@ -15,13 +15,13 @@ dealing with the potential fail :
 
 Those ways are okay, but I think there both have some problems.
 
-For the exception case, if the exception is not caught, it can 
+For the exception case, if the exception is not caught, it can
 abruptly stop the program. There are of course checked exception
 that help, but cactching can make the process way much heavyer,
 like when dealing with division.
 
-For the nil case, it first not always usable in java since 
-primitives are not nullable (but I would say the problem is 
+For the nil case, it first not always usable in java since
+primitives are not nullable (but I would say the problem is
 on java's side). Plus, is you have many acctions that can fail
 you will have to check each time if you don't encounter nil,
 which may be as heavier as capturing exception descripbed above.
@@ -29,12 +29,12 @@ which may be as heavier as capturing exception descripbed above.
 ## Solution ?
 My proposal to this problem is made by two classes that are
 united under an abstract class. One is for describing success
-and holds the result of the process, the other for errors and 
-holds a `String` constaining the error message.
+and holds the result of the process, the other for errors and
+holds a `String` containing the error message.
 
 If you are familair with Scala, I think you could see this
-as a variant of Either[A, String]. From an elm background this 
-works a lot like the type Result.
+as a variant of Either[A, String]. From an elm background this
+looks a lot like the type Result.
 
 Example case :
 ```java
