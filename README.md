@@ -33,8 +33,8 @@ and holds the result of the process, the other for errors and
 holds a `String` containing the error message.
 
 If you are familiar with Scala, I think you could see this
-as a variant of Either[A, String]. From an elm background this
-looks a lot like the type Result.
+as Try type. From an elm background this
+looks a lot like the Result type.
 
 Example case :
 ```java
