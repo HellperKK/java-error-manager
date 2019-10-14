@@ -50,9 +50,6 @@ public static void main(String[] args) {
 }
 ```
 
-As you can see, this has some problems, like the fact that I hav
-to cast elem to Integer each time
-
 ## Should I use it ?
 In most cases, probably not. I you can quickly fix you problem
 when your application crashes, then you shouldn't. If your
