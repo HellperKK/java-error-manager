@@ -11,20 +11,20 @@ for a value in a collection at a given index, there are two ways of
 dealing with the potential fail :
 
 - throwing an exception
-- returning null (but only when dealing with objects)
+- returning null
 
-Those ways are okay, but I think there both have some problems.
+Those ways are okay, but I think they both have some problems.
 
 For the exception case, if the exception is not caught, it can
 abruptly stop the program. There are of course checked exception
 that help, but catching can make the process way much heavier,
 like when dealing with division.
 
-For the nil case, it first not always usable in java since
+For the null case, it first not always usable in java since
 primitives are not nullable (but I would say the problem is
 on java's side). Plus, is you have many actions that can fail
 you will have to check each time if you don't encounter nil,
-which may be as heavier as capturing exception described above.
+which may be as heavy as capturing exception described above.
 
 ## Solution ?
 My proposal to this problem is made by two classes that are
@@ -33,8 +33,8 @@ and holds the result of the process, the other for errors and
 holds a `String` containing the error message.
 
 If you are familiar with Scala, I think you could see this
-as Try type. From an elm background this
-looks a lot like the Result type.
+as Try type. From an elm background this looks a lot like 
+the Result type.
 
 Example case :
 ```java
